@@ -6,7 +6,32 @@
 
     let tierList: HTMLDivElement;
 
-    let tiers: Tier[] = [];
+    let tiers: Tier[] = [
+        {
+            name: "S",
+            color: "#80ff80",
+        },
+        {
+            name: "A",
+            color: "#c0ff80",
+        },
+        {
+            name: "B",
+            color: "#ffff80",
+        },
+        {
+            name: "C",
+            color: "#ffc080",
+        },
+        {
+            name: "D",
+            color: "#ff9e80",
+        },
+        {
+            name: "F",
+            color: "#ff8080",
+        },
+    ];
 
     onMount(() => {
         Sortable.create(tierList, {
