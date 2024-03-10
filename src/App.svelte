@@ -38,6 +38,7 @@
             group: "tiers",
             animation: 100,
             handle: ".handle",
+            dragClass: "ghost",
         });
     });
 
@@ -46,7 +47,7 @@
             ...tiers,
             {
                 name: "New Tier",
-                color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+                color: `#999`,
             },
         ];
     }

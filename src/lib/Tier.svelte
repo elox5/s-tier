@@ -12,6 +12,7 @@
         Sortable.create(list, {
             group: "images",
             animation: 100,
+            dragClass: "ghost",
         });
     });
 

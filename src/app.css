@@ -97,6 +97,7 @@ img {
   border-radius: 5px;
 }
 
-.sortable-ghost {
-  opacity: 0;
+.ghost {
+  /* not 0 to avoid file icon? */
+  opacity: 0.0001;
 }
