@@ -25,6 +25,7 @@
         <span
             class="name-span"
             contenteditable="true"
+            spellcheck="false"
             placeholder="New Tier"
             bind:this={nameSpan}
             on:input={validateName}>{name}</span
