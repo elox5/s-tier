@@ -96,3 +96,7 @@ img {
 
   border-radius: 5px;
 }
+
+.sortable-ghost {
+  opacity: 0;
+}
