@@ -37,7 +37,7 @@
         Sortable.create(tierList, {
             group: "tiers",
             animation: 100,
-            handle: ".header",
+            handle: ".handle",
         });
     });
 

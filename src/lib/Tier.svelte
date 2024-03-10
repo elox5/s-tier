@@ -31,6 +31,9 @@
         >
     </div>
     <div class="list" bind:this={list}></div>
+    <div class="handle">
+        <img src="src/assets/handle.svg" alt="..." />
+    </div>
 </div>
 
 <style>
@@ -89,5 +92,25 @@
         flex-wrap: wrap;
         padding: 10px;
         gap: 10px;
+    }
+
+    .handle {
+        width: 65px;
+
+        background-color: rgba(255, 255, 255, 0.05);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        transition: background-color 0.1s;
+    }
+    .handle:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .handle > img {
+        width: 80%;
+        opacity: 0.15;
     }
 </style>
