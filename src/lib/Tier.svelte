@@ -43,18 +43,20 @@
 
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 5px;
-        overflow: hidden;
     }
-    .tier:first-of-type {
+    .tier:first-of-type,
+    .tier:first-of-type > .header {
         border-top-left-radius: 15px;
     }
-    .tier:last-of-type {
+    .tier:last-of-type,
+    .tier:last-of-type > .header {
         border-bottom-left-radius: 15px;
     }
 
     .header {
-        max-width: 140px;
-        aspect-ratio: 1;
+        width: 140px;
+
+        aspect-ratio: 1 / 1;
 
         display: flex;
         justify-content: center;
@@ -68,7 +70,7 @@
     }
 
     .name-span {
-        width: 100%;
+        width: calc(100% - 10px);
         white-space: pre-wrap;
         color: #111;
     }
