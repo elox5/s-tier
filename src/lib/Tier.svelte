@@ -3,6 +3,7 @@
     import { onMount } from "svelte";
 
     let list: HTMLDivElement;
+    let nameSpan: HTMLSpanElement;
 
     export let name: string;
     export let color: string;
@@ -13,11 +14,21 @@
             animation: 100,
         });
     });
+
+    function validateName() {
+        if (nameSpan.textContent === "") nameSpan.children[0].remove();
+    }
 </script>
 
 <div class="tier">
     <div class="header" style="background-color: {color}">
-        <span class="name-span" contenteditable="true">{name}</span>
+        <span
+            class="name-span"
+            contenteditable="true"
+            placeholder="New Tier"
+            bind:this={nameSpan}
+            on:input={validateName}>{name}</span
+        >
     </div>
     <div class="list" bind:this={list}></div>
 </div>
@@ -52,10 +63,21 @@
         font-size: 1.2rem;
         font-weight: bold;
         word-break: break-word;
+
+        border-radius: 5px;
     }
 
     .name-span {
         width: 100%;
+        white-space: pre-wrap;
+        color: #111;
+    }
+    .name-span:empty:not(:focus):before {
+        content: attr(placeholder);
+        pointer-events: none;
+        display: inline-block;
+        font-style: italic;
+        color: rgba(0, 0, 0, 0.7);
     }
 
     .list {
