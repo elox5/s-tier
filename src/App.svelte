@@ -150,15 +150,13 @@
     <Logo />
     <div class="header-buttons">
         <button
-            class="settings-button {shift ? 'active' : ''}"
+            class="settings-button"
+            class:active={shift}
             on:click={toggleShift}
         >
             <Settings2 />
         </button>
-        <button
-            class="remove-button {ctrl ? 'active' : ''}"
-            on:click={toggleCtrl}
-        >
+        <button class="remove-button" class:active={ctrl} on:click={toggleCtrl}>
             <Trash2 />
         </button>
     </div>

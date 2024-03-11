@@ -15,7 +15,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="container" bind:this={container} on:click={handleRemove}>
-    <img class={ctrl ? "removable" : ""} src={url} alt="" />
+    <img class:removable={ctrl} src={url} alt="" />
     <div class="overlay">
         <Trash2 />
     </div>
