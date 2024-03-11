@@ -99,7 +99,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         align-content: start;
-        justify-content: center;
         gap: 10px;
     }
 
