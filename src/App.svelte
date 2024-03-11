@@ -5,6 +5,7 @@
     import Sortable from "sortablejs";
     import type { TierData } from "./main";
     import Image from "./lib/Image.svelte";
+    import Logo from "./lib/Logo.svelte";
 
     let tierList: HTMLDivElement;
 
@@ -121,6 +122,9 @@
 
 <svelte:window on:paste={handlePaste} on:drop={handleDrop} />
 
+<header>
+    <Logo />
+</header>
 <main>
     <div class="tier-container border">
         <div class="tier-list" bind:this={tierList}>
@@ -138,28 +142,44 @@
         </ImageList>
     </div>
 </main>
+<footer></footer>
 
 <style>
+    header {
+        background-color: #444;
+    }
+
     main {
         width: 100%;
+        min-height: calc(100vh - 140px);
 
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
+
+        padding: 2rem;
+    }
+
+    footer {
+        background-color: #444;
     }
 
     .add-button {
         width: 100%;
         max-width: 100px;
         height: 50px;
-        margin: 10px;
+        margin: 10px 0px;
+
+        padding: 0px;
+
+        transition: max-width 0.5s;
     }
 
     .tier-container {
         overflow: hidden;
 
         flex: 1 0 60%;
-        max-width: calc(70% - 10px);
+        /* max-width: calc(70% - 10px); */
 
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
@@ -186,6 +206,7 @@
         border-bottom-left-radius: 5px;
 
         transition: max-width 0.5s;
+        transition: border-radius 0.2s;
     }
 
     @media (max-width: 1766px) {
@@ -194,16 +215,33 @@
         }
     }
 
-    @media (max-width: 1400px) {
+    @media (max-width: 1450px) {
         .image-list {
             max-width: 400px;
         }
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 1200px) {
+        .add-button {
+            max-width: 100%;
+        }
+
+        main {
+            align-content: start;
+            gap: 0px;
+        }
+
         .tier-container,
         .image-list {
             max-width: 100%;
+        }
+
+        .image-list {
+            flex: 0 0 100%;
+            min-height: 310px;
+
+            border-top-right-radius: 5px;
+            border-bottom-left-radius: 15px;
         }
     }
 </style>

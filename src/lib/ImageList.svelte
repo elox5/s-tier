@@ -16,11 +16,31 @@
 </script>
 
 <div class="element">
-    <div class="image-list" bind:this={list}>
-        <slot />
+    <div class="main">
+        <div class="image-list" bind:this={list}>
+            <slot />
+        </div>
+        <div class="buttons">
+            <label class="upload-button"
+                >Upload images<input
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    hidden
+                    bind:files
+                /></label
+            >
+            <label class="upload-button"
+                >Upload a tierlist file<input
+                    type="file"
+                    accept=".tierlist.json"
+                    hidden
+                /></label
+            >
+        </div>
     </div>
     <div class="fallback">
-        <h3>Drag images here to get started</h3>
+        <h3>Drag or paste images here to get started</h3>
         <hr />
         <ul style="list-style: none; padding: 0">
             <li>
@@ -43,9 +63,6 @@
                     /></label
                 >
             </li>
-            <li>
-                <p><i>Paste images or links</i></p>
-            </li>
         </ul>
     </div>
 </div>
@@ -63,6 +80,15 @@
         border: 1px solid red;
     }
 
+    .main {
+        width: 100%;
+        height: 100%;
+
+        display: grid;
+        grid-template-rows: 1fr 70px;
+        gap: 10px;
+    }
+
     .image-list {
         width: 100%;
         height: 100%;
@@ -75,6 +101,16 @@
         align-content: start;
         justify-content: center;
         gap: 10px;
+    }
+
+    .buttons {
+        display: flex;
+        align-items: center;
+        justify-self: center;
+        gap: 10px;
+    }
+    .main:has(.image-list:empty) > .buttons {
+        display: none;
     }
 
     .fallback {

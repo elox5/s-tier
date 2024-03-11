@@ -91,6 +91,8 @@
 
         background-color: rgba(255, 255, 255, 0.05);
         border-radius: 5px;
+
+        transition: border-radius 0.2s;
     }
     .tier:first-of-type,
     .tier:first-of-type > .header {
@@ -180,5 +182,17 @@
     dialog {
         border: none;
         padding: 0px;
+    }
+
+    @media (max-width: 1200px) {
+        .tier:first-of-type,
+        .tier:first-of-type > .handle {
+            border-top-right-radius: 15px;
+        }
+
+        .tier:last-of-type,
+        .tier:last-of-type > .header {
+            border-bottom-left-radius: 5px;
+        }
     }
 </style>
