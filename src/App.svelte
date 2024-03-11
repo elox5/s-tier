@@ -6,10 +6,12 @@
     import type { TierData } from "./main";
     import Image from "./lib/Image.svelte";
     import Logo from "./lib/Logo.svelte";
-    import { Settings2, Trash2 } from "lucide-svelte";
+    import { Moon, Settings2, Trash2 } from "lucide-svelte";
+    import { Sun } from "lucide-svelte";
 
     let shift: boolean = false;
     let ctrl: boolean = false;
+    let lightTheme: boolean = false;
 
     let tierList: HTMLDivElement;
 
@@ -131,6 +133,10 @@
         ctrl = !ctrl;
         shift = false;
     }
+    function toggleTheme() {
+        lightTheme = !lightTheme;
+        document.documentElement.dataset.theme = lightTheme ? "light" : "dark";
+    }
 </script>
 
 <svelte:window
@@ -150,13 +156,28 @@
     <Logo />
     <div class="header-buttons">
         <button
-            class="settings-button"
+            class="header-button theme-button"
+            class:light={lightTheme}
+            on:click={toggleTheme}
+        >
+            {#if lightTheme}
+                <Moon />
+            {:else}
+                <Sun />
+            {/if}
+        </button>
+        <button
+            class="header-button settings-button"
             class:active={shift}
             on:click={toggleShift}
         >
             <Settings2 />
         </button>
-        <button class="remove-button" class:active={ctrl} on:click={toggleCtrl}>
+        <button
+            class="header-button remove-button"
+            class:active={ctrl}
+            on:click={toggleCtrl}
+        >
             <Trash2 />
         </button>
     </div>
@@ -186,7 +207,7 @@
 
 <style>
     header {
-        background-color: #444;
+        background-color: var(--header-bg-color);
 
         display: flex;
         justify-content: space-between;
@@ -206,12 +227,26 @@
     }
 
     footer {
-        background-color: #444;
+        background-color: var(--header-bg-color);
 
         display: flex;
         justify-content: start;
         align-items: center;
         padding: 20px;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 5px;
+    }
+
+    .header-button {
+        display: flex;
+        place-items: center;
+    }
+
+    .theme-button {
+        background-color: var(--upload-button-color);
     }
 
     .settings-button {
@@ -258,7 +293,7 @@
     }
 
     .image-list {
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--element-bg-color);
         border-radius: 15px;
 
         overflow: hidden;

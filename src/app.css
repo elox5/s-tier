@@ -3,9 +3,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: dark;
+  color: var(--text-color);
+  background-color: var(--main-bg-color);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,6 +15,59 @@
 
   --gap: 10px;
   --image-size: 90px;
+
+  --main-bg-color: #242424;
+  --element-bg-color: #2f2f2f;
+  --header-bg-color: #444;
+  --text-color: rgba(255, 255, 255, 0.87);
+  --link-color: #80ff80;
+
+  --handle-color: rgba(255, 255, 255, 0.05);
+  --handle-color-hover: rgba(255, 255, 255, 0.15);
+
+  --upload-button-color: rgba(0, 0, 0, 0.3);
+  --upload-button-color-hover: rgba(0, 0, 0, 0.1);
+  --upload-button-color-active: rgba(255, 255, 255, 0.1);
+
+
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --main-bg-color: #fef5ea;
+  --element-bg-color: #ebdfcc;
+  --header-bg-color: #c4baa9;
+  --text-color: rgba(0, 0, 0, 0.87);
+  --link-color: #006c00;
+
+  --handle-color: rgba(0, 0, 0, 0.05);
+  --handle-color-hover: rgba(0, 0, 0, 0.15);
+
+  --upload-button-color: rgba(0, 0, 0, 0.1);
+  --upload-button-color-hover: rgba(0, 0, 0, 0.2);
+  --upload-button-color-active: rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --main-bg-color: #fef5ea;
+    --element-bg-color: #ebdfcc;
+    --header-bg-color: #c4baa9;
+    --text-color: rgba(0, 0, 0, 0.87);
+
+    --handle-color: rgba(0, 0, 0, 0.05);
+    --handle-color-hover: rgba(0, 0, 0, 0.15);
+
+    --upload-button-color: rgba(0, 0, 0, 0.1);
+    --upload-button-color-hover: rgba(0, 0, 0, 0.2);
+    --upload-button-color-active: rgba(0, 0, 0, 0.4);
+  }
 }
 
 
@@ -40,7 +93,7 @@ a {
 
 a,
 a:visited {
-  color: #80ff80;
+  color: var(--link-color);
 }
 
 dialog {
@@ -54,17 +107,17 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #333333;
+  background-color: var(--element-bg-color);
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 button:hover {
-  background-color: #444444;
+  background-color: #444;
 }
 
 button:active {
-  background-color: #555555;
+  background-color: #555;
 }
 
 .ghost {

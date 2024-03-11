@@ -130,16 +130,18 @@
     }
 
     .upload-button {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: var(--upload-button-color);
         padding: 10px;
         border-radius: 5px;
         cursor: pointer;
+
+        transition: background-color 0.2s;
     }
     .upload-button:hover {
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: var(--upload-button-color-hover);
     }
     .upload-button:active {
-        background-color: rgba(255, 255, 255, 0.3);
+        background-color: var(--upload-button-color-active);
     }
 
     hr {

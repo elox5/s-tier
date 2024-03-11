@@ -34,6 +34,8 @@
 
 <style>
     .settings {
+        color: rgba(255, 255, 255, 0.87);
+
         width: 400px;
         height: 500px;
 

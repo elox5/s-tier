@@ -80,7 +80,7 @@
         display: flex;
         flex-direction: row;
 
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--element-bg-color);
         border-radius: 5px;
 
         transition: border-radius 0.2s;
@@ -133,7 +133,7 @@
     .handle {
         width: 65px;
 
-        background-color: rgba(255, 255, 255, 0.05);
+        background-color: var(--handle-color);
         border-radius: 5px;
 
         display: flex;
@@ -142,16 +142,20 @@
 
         padding: 0;
 
-        transition: background-color 0.3s;
+        transition: background-color 0.2s;
     }
     .handle:hover {
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: var(--handle-color-hover);
     }
 
     .handle-button {
         width: 100%;
         height: 100%;
         background-color: transparent;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .handle:has(.settings-button) {
