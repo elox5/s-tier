@@ -4,6 +4,7 @@
     import Tier from "./lib/Tier.svelte";
     import Sortable from "sortablejs";
     import type { TierData } from "./main";
+    import Image from "./lib/Image.svelte";
 
     let tierList: HTMLDivElement;
 
@@ -34,6 +35,14 @@
         },
     ];
 
+    let imageUrls: string[] = [];
+
+    let files: FileList;
+
+    $: if (files) {
+        for (let file of files) handleImage(file);
+    }
+
     onMount(() => {
         Sortable.create(tierList, {
             group: "tiers",
@@ -52,7 +61,57 @@
             },
         ];
     }
+
+    function handlePaste(event: ClipboardEvent) {
+        let data = event.clipboardData;
+        if (!data) return;
+
+        data = data as DataTransfer;
+        let items = data.items;
+
+        for (let key in items) {
+            let item = items[key];
+
+            if (item.kind === "file") {
+                let file = item.getAsFile() as File;
+
+                handleImage(file);
+            } else if (item.kind === "string") {
+                console.log("todo");
+            }
+        }
+    }
+
+    function handleDrop(event: DragEvent) {
+        var data = event.dataTransfer;
+        if (!data) return;
+
+        data = data as DataTransfer;
+
+        for (let key in data.items) {
+            let item = data.items[key];
+
+            if (item.kind === "file") {
+                let file = item.getAsFile() as File;
+
+                handleImage(file);
+            } else if (item.kind === "string") {
+                console.log("todo");
+            }
+        }
+    }
+
+    export function handleImage(image: File) {
+        let url = URL.createObjectURL(image);
+
+        let element = document.createElement("img");
+        element.src = url;
+
+        imageUrls = [...imageUrls, url];
+    }
 </script>
+
+<svelte:window on:paste={handlePaste} on:drop={handleDrop} />
 
 <main>
     <div class="tier-container border">
@@ -63,7 +122,13 @@
         </div>
         <button class="add-button" on:click={addTier}>+</button>
     </div>
-    <div class="image-list border"><ImageList /></div>
+    <div class="image-list border">
+        <ImageList bind:files>
+            {#each imageUrls as url}
+                <Image {url} />
+            {/each}
+        </ImageList>
+    </div>
 </main>
 
 <style>
