@@ -101,7 +101,7 @@
         }
     }
 
-    export function handleImage(image: File) {
+    function handleImage(image: File) {
         let url = URL.createObjectURL(image);
 
         let element = document.createElement("img");
@@ -109,6 +109,14 @@
 
         imageUrls = [...imageUrls, url];
     }
+
+    function deleteTier(tier: TierData) {
+        if (tiers.length <= 1) return;
+
+        tiers = tiers.filter((t) => t !== tier);
+    }
+
+    function clearTier(tier: Tier) {}
 </script>
 
 <svelte:window on:paste={handlePaste} on:drop={handleDrop} />
@@ -117,7 +125,7 @@
     <div class="tier-container border">
         <div class="tier-list" bind:this={tierList}>
             {#each tiers as tier}
-                <Tier bind:data={tier} />
+                <Tier bind:data={tier} {deleteTier} />
             {/each}
         </div>
         <button class="add-button" on:click={addTier}>+</button>

@@ -1,17 +1,19 @@
 <script lang="ts">
-    import { GripVertical, Settings2 } from "lucide-svelte";
-    import Sortable from "sortablejs";
+    import { GripVertical, Settings2, Trash2 } from "lucide-svelte";
     import { onMount } from "svelte";
-    import SettingsModal from "./SettingsModal.svelte";
     import type { TierData } from "../main";
+    import Sortable from "sortablejs";
+    import SettingsModal from "./SettingsModal.svelte";
 
     export let data: TierData;
+    export let deleteTier: (tier: TierData) => void;
 
     let list: HTMLDivElement;
     let nameSpan: HTMLSpanElement;
     let settingsModal: HTMLDialogElement;
 
     let shift: boolean = false;
+    let ctrl: boolean = false;
 
     onMount(() => {
         Sortable.create(list, {
@@ -25,7 +27,7 @@
         if (nameSpan.textContent === "") nameSpan.children[0].remove();
     }
 
-    function openSettingsModal() {
+    function openSettings() {
         if (!shift) return;
         settingsModal.showModal();
     }
@@ -34,9 +36,11 @@
 <svelte:window
     on:keydown={(e) => {
         if (e.key === "Shift") shift = true;
+        if (e.key === "Control") ctrl = true;
     }}
     on:keyup={(e) => {
         if (e.key === "Shift") shift = false;
+        if (e.key === "Control") ctrl = false;
     }}
 />
 
@@ -52,17 +56,25 @@
         >
     </div>
     <div class="list" bind:this={list}></div>
-    <button class="handle" on:click={openSettingsModal}>
+    <div class="handle">
         {#if shift}
-            <Settings2 />
-        {:else}
-            <div
-                style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center"
+            <button
+                class="handle-button settings-button"
+                on:click={openSettings}
             >
-                <GripVertical />
-            </div>
+                <Settings2 />
+            </button>
+        {:else if ctrl}
+            <button
+                class="handle-button remove-button"
+                on:click={() => deleteTier(data)}
+            >
+                <Trash2 />
+            </button>
+        {:else}
+            <GripVertical />
         {/if}
-    </button>
+    </div>
 
     <dialog bind:this={settingsModal}>
         <SettingsModal bind:tier={data} />
@@ -139,10 +151,30 @@
 
         padding: 0;
 
-        transition: background-color 0.1s;
+        transition: background-color 0.3s;
     }
     .handle:hover {
         background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .handle-button {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+    }
+
+    .handle:has(.settings-button) {
+        background-color: rgba(128, 128, 255, 0.5);
+    }
+    .handle:has(.settings-button):hover {
+        background-color: rgba(128, 128, 255, 1);
+    }
+
+    .handle:has(.remove-button) {
+        background-color: rgba(255, 128, 128, 0.5);
+    }
+    .handle:has(.remove-button):hover {
+        background-color: rgba(255, 128, 128, 1);
     }
 
     dialog {
