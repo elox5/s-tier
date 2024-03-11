@@ -175,7 +175,7 @@
     <div class="image-list border">
         <ImageList bind:files>
             {#each imageUrls as url}
-                <Image {url} />
+                <Image {url} {ctrl} />
             {/each}
         </ImageList>
     </div>
