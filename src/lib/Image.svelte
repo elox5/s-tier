@@ -38,7 +38,7 @@
         transition: filter 0.2s;
     }
     img.removable:hover {
-        filter: blur(2px);
+        filter: blur(2px) brightness(0.6);
     }
 
     .overlay {
