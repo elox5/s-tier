@@ -3,10 +3,11 @@
     import ImageList from "./lib/ImageList.svelte";
     import Tier from "./lib/Tier.svelte";
     import Sortable from "sortablejs";
+    import type { TierData } from "./main";
 
     let tierList: HTMLDivElement;
 
-    let tiers: Tier[] = [
+    let tiers: TierData[] = [
         {
             name: "S",
             color: "#80ff80",
@@ -51,18 +52,13 @@
             },
         ];
     }
-
-    interface Tier {
-        name: string;
-        color: string;
-    }
 </script>
 
 <main>
     <div class="tier-container border">
         <div class="tier-list" bind:this={tierList}>
             {#each tiers as tier}
-                <Tier name={tier.name} color={tier.color} />
+                <Tier bind:data={tier} />
             {/each}
         </div>
         <button class="add-button" on:click={addTier}>+</button>

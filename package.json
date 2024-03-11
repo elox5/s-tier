@@ -21,6 +21,7 @@
   "dependencies": {
     "@types/sortablejs": "^1.15.8",
     "lucide": "^0.354.0",
+    "lucide-svelte": "^0.354.0",
     "sortablejs": "^1.15.2"
   }
 }
