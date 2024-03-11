@@ -6,9 +6,9 @@
 
 <style>
     img {
-        min-width: 60px;
-        max-width: 240px;
-        height: 120px;
+        min-width: calc(var(--image-size) * 0.5);
+        max-width: calc(var(--image-size) * 2);
+        height: var(--image-size);
 
         object-fit: cover;
 

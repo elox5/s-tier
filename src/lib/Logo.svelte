@@ -8,8 +8,6 @@
         width: 120px;
         height: calc(100% - 10px);
 
-        margin: 5px 20px;
-
         display: flex;
         align-items: center;
         gap: 5px;

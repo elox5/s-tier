@@ -8,12 +8,12 @@
     export let data: TierData;
     export let deleteTier: (tier: TierData) => void;
 
+    export let shift: boolean;
+    export let ctrl: boolean;
+
     let list: HTMLDivElement;
     let nameSpan: HTMLSpanElement;
     let settingsModal: HTMLDialogElement;
-
-    let shift: boolean = false;
-    let ctrl: boolean = false;
 
     onMount(() => {
         Sortable.create(list, {
@@ -33,17 +33,6 @@
     }
 </script>
 
-<svelte:window
-    on:keydown={(e) => {
-        if (e.key === "Shift") shift = true;
-        if (e.key === "Control") ctrl = true;
-    }}
-    on:keyup={(e) => {
-        if (e.key === "Shift") shift = false;
-        if (e.key === "Control") ctrl = false;
-    }}
-/>
-
 <div class="tier">
     <div class="header" style="background-color: {data.color}">
         <span
@@ -52,8 +41,10 @@
             spellcheck="false"
             placeholder="New Tier"
             bind:this={nameSpan}
-            on:input={validateName}>{data.name}</span
+            on:input={validateName}
         >
+            {data.name}
+        </span>
     </div>
     <div class="list" bind:this={list}></div>
     <div class="handle">
@@ -84,7 +75,7 @@
 <style>
     .tier {
         width: 100%;
-        min-height: 140px;
+        min-height: calc(var(--image-size) * 0.5 + 20px);
 
         display: flex;
         flex-direction: row;
@@ -104,9 +95,7 @@
     }
 
     .header {
-        width: 140px;
-
-        aspect-ratio: 1 / 1;
+        width: calc(var(--image-size) + 20px);
 
         display: flex;
         justify-content: center;

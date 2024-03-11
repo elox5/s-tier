@@ -6,6 +6,10 @@
     import type { TierData } from "./main";
     import Image from "./lib/Image.svelte";
     import Logo from "./lib/Logo.svelte";
+    import { Settings2, Trash2 } from "lucide-svelte";
+
+    let shift: boolean = false;
+    let ctrl: boolean = false;
 
     let tierList: HTMLDivElement;
 
@@ -57,7 +61,7 @@
         tiers = [
             ...tiers,
             {
-                name: "New Tier",
+                name: "",
                 color: tiers.at(-1)?.color ?? "#80ff80",
             },
         ];
@@ -118,18 +122,52 @@
     }
 
     function clearTier(tier: Tier) {}
+
+    function toggleShift() {
+        shift = !shift;
+        ctrl = false;
+    }
+    function toggleCtrl() {
+        ctrl = !ctrl;
+        shift = false;
+    }
 </script>
 
-<svelte:window on:paste={handlePaste} on:drop={handleDrop} />
+<svelte:window
+    on:paste={handlePaste}
+    on:drop={handleDrop}
+    on:keydown={(e) => {
+        if (e.key === "Shift") shift = true;
+        if (e.key === "Control") ctrl = true;
+    }}
+    on:keyup={(e) => {
+        if (e.key === "Shift") shift = false;
+        if (e.key === "Control") ctrl = false;
+    }}
+/>
 
 <header>
     <Logo />
+    <div class="header-buttons">
+        <button
+            class="settings-button {shift ? 'active' : ''}"
+            on:click={toggleShift}
+        >
+            <Settings2 />
+        </button>
+        <button
+            class="remove-button {ctrl ? 'active' : ''}"
+            on:click={toggleCtrl}
+        >
+            <Trash2 />
+        </button>
+    </div>
 </header>
 <main>
     <div class="tier-container border">
         <div class="tier-list" bind:this={tierList}>
             {#each tiers as tier}
-                <Tier bind:data={tier} {deleteTier} />
+                <Tier bind:data={tier} bind:shift bind:ctrl {deleteTier} />
             {/each}
         </div>
         <button class="add-button" on:click={addTier}>+</button>
@@ -142,11 +180,20 @@
         </ImageList>
     </div>
 </main>
-<footer></footer>
+<footer>
+    <div>
+        Made by <a href="https://github.com/elox5" target="_blank">elOx</a>
+    </div>
+</footer>
 
 <style>
     header {
         background-color: #444;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
     }
 
     main {
@@ -162,6 +209,25 @@
 
     footer {
         background-color: #444;
+
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .settings-button {
+        background-color: rgba(128, 128, 255, 0.5);
+    }
+    .settings-button.active {
+        background-color: rgba(128, 128, 255, 1);
+    }
+
+    .remove-button {
+        background-color: rgba(255, 128, 128, 0.5);
+    }
+    .remove-button.active {
+        background-color: rgba(255, 128, 128, 1);
     }
 
     .add-button {
@@ -205,8 +271,9 @@
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
 
-        transition: max-width 0.5s;
-        transition: border-radius 0.2s;
+        transition:
+            max-width 0.5s,
+            border-radius 0.2s;
     }
 
     @media (max-width: 1766px) {

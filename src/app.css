@@ -12,6 +12,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --gap: 10px;
+  --image-size: 90px;
 }
 
 
@@ -28,6 +31,16 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a,
+a:visited {
+  color: #80ff80;
 }
 
 dialog {
