@@ -1,4 +1,5 @@
 <script lang="ts">
+    import ColorPicker from "svelte-awesome-color-picker";
     import type { TierData } from "../main";
 
     export let tier: TierData;
@@ -14,7 +15,18 @@
                 placeholder="Tier name..."
             />
         </p>
-        <p>Color: <input type="color" bind:value={tier.color} /></p>
+        <p>
+            <ColorPicker
+                bind:hex={tier.color}
+                label="Header Color"
+                isDark={true}
+                isAlpha={false}
+                --cp-bg-color="#333"
+                --cp-border-color="white"
+                --cp-input-color="#555"
+                --cp-button-hover-color="#777"
+            />
+        </p>
 
         <button type="submit">Close</button>
     </form>
