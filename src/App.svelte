@@ -6,7 +6,7 @@
     import type { TierData } from "./main";
     import Image from "./lib/Image.svelte";
     import Logo from "./lib/Logo.svelte";
-    import { Moon, Settings2, Trash2 } from "lucide-svelte";
+    import { ArrowDownToLine, Moon, Settings2, Trash2 } from "lucide-svelte";
     import { Sun } from "lucide-svelte";
 
     let shift: boolean = false;
@@ -137,6 +137,24 @@
         lightTheme = !lightTheme;
         document.documentElement.dataset.theme = lightTheme ? "light" : "dark";
     }
+
+    function save() {
+        let data = {
+            tiers: tiers,
+            imageUrls: imageUrls,
+        };
+        let json = JSON.stringify(data);
+        console.log(json);
+
+        let blob = new Blob([json], { type: "application/json" });
+        let url = URL.createObjectURL(blob);
+        let a = document.createElement("a");
+        a.href = url;
+        a.download = "tierlist.tierlist.json";
+        a.click();
+    }
+
+    function load() {}
 </script>
 
 <svelte:window
@@ -155,6 +173,13 @@
 <header>
     <Logo />
     <div class="header-buttons">
+        <button
+            class="header-button save-button"
+            class:active={shift}
+            on:click={save}
+        >
+            <ArrowDownToLine />
+        </button>
         <button
             class="header-button theme-button"
             class:light={lightTheme}
@@ -243,6 +268,13 @@
     .header-button {
         display: flex;
         place-items: center;
+    }
+
+    .save-button:hover {
+        background-color: rgba(128, 255, 128, 0.5);
+    }
+    .save-button:active {
+        background-color: rgba(128, 255, 128, 1);
     }
 
     .theme-button {
