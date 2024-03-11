@@ -56,7 +56,11 @@
         {#if shift}
             <Settings2 />
         {:else}
-            <GripVertical />
+            <div
+                style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center"
+            >
+                <GripVertical />
+            </div>
         {/if}
     </button>
 
@@ -132,6 +136,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
+        padding: 0;
 
         transition: background-color 0.1s;
     }
