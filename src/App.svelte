@@ -58,7 +58,7 @@
             ...tiers,
             {
                 name: "New Tier",
-                color: `#999`,
+                color: tiers.at(-1)?.color ?? "#80ff80",
             },
         ];
     }
