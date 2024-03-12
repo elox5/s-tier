@@ -45,9 +45,14 @@
     let imageUrls: string[] = [];
 
     let files: FileList;
+    let tierlistFile: File;
 
     $: if (files) {
         for (let file of files) handleImage(file);
+    }
+
+    $: if (tierlistFile) {
+        load(tierlistFile);
     }
 
     onMount(() => {
@@ -154,7 +159,7 @@
         a.click();
     }
 
-    function load() {}
+    function load(file: File) {}
 </script>
 
 <svelte:window
@@ -186,9 +191,9 @@
             on:click={toggleTheme}
         >
             {#if lightTheme}
-                <Moon />
-            {:else}
                 <Sun />
+            {:else}
+                <Moon />
             {/if}
         </button>
         <button
@@ -217,7 +222,7 @@
         <button class="add-button" on:click={addTier}>+</button>
     </div>
     <div class="image-list border">
-        <ImageList bind:files>
+        <ImageList bind:files bind:tierlistFile>
             {#each imageUrls as url}
                 <Image {url} {ctrl} />
             {/each}
