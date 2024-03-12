@@ -31,6 +31,8 @@
     .list {
         flex: 1;
 
+        border: 1px solid red;
+
         display: flex;
         flex-wrap: wrap;
         align-content: start;
