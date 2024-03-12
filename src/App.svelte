@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import ImageList from "./lib/ImageList.svelte";
+    import MainList from "./lib/MainList.svelte";
     import Tier from "./lib/Tier.svelte";
     import Sortable from "sortablejs";
     import type { TierData } from "./main";
@@ -238,11 +238,11 @@
         <button class="add-button" on:click={addTier}>+</button>
     </div>
     <div class="image-list border">
-        <ImageList bind:files bind:tierlistFile>
+        <MainList bind:files bind:tierlistFile>
             {#each imageUrls as url}
                 <Image {url} {ctrl} />
             {/each}
-        </ImageList>
+        </MainList>
     </div>
 </main>
 <footer>
