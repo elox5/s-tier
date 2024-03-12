@@ -100,7 +100,15 @@ a:visited {
 }
 
 dialog {
-  background-color: transparent;
+  color: rgba(255, 255, 255, 0.87);
+
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid transparent;
+  border-radius: 5px;
+
+  text-align: center;
+
+  overflow-x: hidden;
 }
 
 button {

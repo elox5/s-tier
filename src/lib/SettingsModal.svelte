@@ -34,16 +34,7 @@
 
 <style>
     .settings {
-        color: rgba(255, 255, 255, 0.87);
-
         width: 400px;
         height: 500px;
-
-        background: rgba(0, 0, 0, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 5px;
-        overflow: hidden;
-
-        text-align: center;
     }
 </style>

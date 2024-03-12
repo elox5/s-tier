@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import type { TierData } from "./main";
+    import type { TierData, TextEntryData } from "./main";
     import MainList from "./lib/MainList.svelte";
     import Tier from "./lib/Tier.svelte";
     import Image from "./lib/Image.svelte";
@@ -14,12 +14,14 @@
         Plus,
     } from "lucide-svelte";
     import Sortable from "sortablejs";
+    import TextEntryDialog from "./lib/TextEntryDialog.svelte";
 
     let shift: boolean = false;
     let ctrl: boolean = false;
     let lightTheme: boolean = false;
 
     let tierList: HTMLDivElement;
+    let textEntryDialog: HTMLDialogElement;
 
     let tiers: TierData[] = [
         {
@@ -73,6 +75,7 @@
     ];
 
     let imageUrls: string[] = [];
+    let textEntries: TextEntryData[] = [];
 
     let files: FileList;
     let tierlistFile: File;
@@ -166,6 +169,15 @@
     }
 
     function clearTier(tier: Tier) {}
+
+    function showTextEntryDialog() {
+        textEntryDialog.showModal();
+    }
+
+    function addTextEntries(data: TextEntryData[]) {
+        textEntries = [...textEntries, ...data];
+        hasUploaded = true;
+    }
 
     function toggleShift() {
         shift = !shift;
@@ -272,12 +284,29 @@
         <button class="add-button" on:click={addTier}><Plus /></button>
     </div>
     <div class="image-list border">
-        <MainList bind:files bind:tierlistFile bind:hasUploaded>
+        <MainList
+            bind:files
+            bind:tierlistFile
+            bind:hasUploaded
+            {showTextEntryDialog}
+        >
             {#each imageUrls as url}
-                <Image {url} {ctrl} />
+                <Image {url} {ctrl} {shift} />
+            {/each}
+            {#each textEntries as entry}
+                <Image
+                    url={entry.text}
+                    color={entry.color}
+                    textOnly={true}
+                    {ctrl}
+                    {shift}
+                />
             {/each}
         </MainList>
     </div>
+    <dialog bind:this={textEntryDialog}>
+        <TextEntryDialog onSubmit={addTextEntries} />
+    </dialog>
 </main>
 <footer>
     <div>
@@ -369,7 +398,6 @@
         overflow: hidden;
 
         flex: 1 0 60%;
-        /* max-width: calc(70% - 10px); */
 
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;

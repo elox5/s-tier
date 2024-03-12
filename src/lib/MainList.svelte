@@ -6,6 +6,8 @@
     export let tierlistFile: File;
     export let hasUploaded: boolean;
 
+    export let showTextEntryDialog: () => void;
+
     let empty: boolean = true;
 
     let data: ListData = {
@@ -51,6 +53,9 @@
                     bind:files={tierlistUpload}
                 /></label
             >
+            <button class="upload-button" on:click={showTextEntryDialog}>
+                Add Text Entries
+            </button>
         </div>
     </div>
 </div>
@@ -111,9 +116,12 @@
     }
 
     .upload-button {
-        background-color: var(--upload-button-color);
         padding: 10px;
+
+        background-color: var(--upload-button-color);
+        color: inherit;
         border-radius: 5px;
+
         cursor: pointer;
 
         transition: background-color 0.2s;
