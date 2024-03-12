@@ -25,7 +25,7 @@
 </script>
 
 <div class="tier">
-    <div class="header" style="background-color: {data.color}">
+    <div class="header sortable-handle" style="background-color: {data.color}">
         <span
             class="name-span"
             contenteditable="true"
@@ -39,7 +39,7 @@
         </span>
     </div>
     <ImageList bind:data={data.list} />
-    <div class="handle">
+    <div class="handle sortable-handle">
         {#if shift}
             <button
                 class="handle-button settings-button"
@@ -169,6 +169,31 @@
         .tier:last-of-type,
         .tier:last-of-type > .header {
             border-bottom-left-radius: 5px;
+        }
+    }
+
+    @media (max-width: 550px) {
+        .tier {
+            flex-direction: column;
+        }
+
+        .tier:first-of-type,
+        .tier:first-of-type > .header {
+            border-top-right-radius: 15px;
+        }
+
+        .header {
+            width: 100%;
+        }
+
+        .name-span {
+            padding: 0px 20px;
+            width: auto;
+            max-width: calc(100% - 50px);
+        }
+
+        .handle {
+            display: none;
         }
     }
 </style>

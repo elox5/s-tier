@@ -68,7 +68,6 @@
 
     .main {
         position: relative;
-        overflow-y: scroll;
 
         display: flex;
 

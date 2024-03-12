@@ -90,7 +90,7 @@
         Sortable.create(tierList, {
             group: "tiers",
             animation: 100,
-            handle: ".handle",
+            handle: ".sortable-handle",
             dragClass: "ghost",
         });
     });
