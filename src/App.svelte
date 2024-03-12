@@ -11,6 +11,7 @@
         Settings2,
         Trash2,
         Sun,
+        Plus,
     } from "lucide-svelte";
     import Sortable from "sortablejs";
 
@@ -268,7 +269,7 @@
                 <Tier bind:data={tier} bind:shift bind:ctrl {deleteTier} />
             {/each}
         </div>
-        <button class="add-button" on:click={addTier}>+</button>
+        <button class="add-button" on:click={addTier}><Plus /></button>
     </div>
     <div class="image-list border">
         <MainList bind:files bind:tierlistFile bind:hasUploaded>
