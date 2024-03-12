@@ -1,13 +1,18 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import type { TierData } from "./main";
     import MainList from "./lib/MainList.svelte";
     import Tier from "./lib/Tier.svelte";
-    import Sortable from "sortablejs";
-    import type { TierData } from "./main";
     import Image from "./lib/Image.svelte";
     import Logo from "./lib/Logo.svelte";
-    import { ArrowDownToLine, Moon, Settings2, Trash2 } from "lucide-svelte";
-    import { Sun } from "lucide-svelte";
+    import {
+        ArrowDownToLine,
+        Moon,
+        Settings2,
+        Trash2,
+        Sun,
+    } from "lucide-svelte";
+    import Sortable from "sortablejs";
 
     let shift: boolean = false;
     let ctrl: boolean = false;
@@ -20,31 +25,49 @@
             name: "S",
             color: "#80ff80",
             index: 0,
+            list: {
+                images: [],
+            },
         },
         {
             name: "A",
             color: "#c0ff80",
             index: 1,
+            list: {
+                images: [],
+            },
         },
         {
             name: "B",
             color: "#ffff80",
             index: 2,
+            list: {
+                images: [],
+            },
         },
         {
             name: "C",
             color: "#ffc080",
             index: 3,
+            list: {
+                images: [],
+            },
         },
         {
             name: "D",
             color: "#ff9e80",
             index: 4,
+            list: {
+                images: [],
+            },
         },
         {
             name: "F",
             color: "#ff8080",
             index: 5,
+            list: {
+                images: [],
+            },
         },
     ];
 
@@ -52,6 +75,8 @@
 
     let files: FileList;
     let tierlistFile: File;
+
+    let hasUploaded: boolean = false;
 
     $: if (files) {
         for (let file of files) handleImage(file);
@@ -77,6 +102,9 @@
                 name: "",
                 color: tiers.at(-1)?.color ?? "#80ff80",
                 index: tiers.length,
+                list: {
+                    images: [],
+                },
             },
         ];
     }
@@ -127,6 +155,7 @@
         element.src = url;
 
         imageUrls = [...imageUrls, url];
+        hasUploaded = true;
     }
 
     function deleteTier(tier: TierData) {
@@ -242,7 +271,7 @@
         <button class="add-button" on:click={addTier}>+</button>
     </div>
     <div class="image-list border">
-        <MainList bind:files bind:tierlistFile>
+        <MainList bind:files bind:tierlistFile bind:hasUploaded>
             {#each imageUrls as url}
                 <Image {url} {ctrl} />
             {/each}

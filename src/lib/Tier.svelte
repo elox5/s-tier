@@ -1,9 +1,8 @@
 <script lang="ts">
     import { GripVertical, Settings2, Trash2 } from "lucide-svelte";
-    import { onMount } from "svelte";
     import type { TierData } from "../main";
-    import Sortable from "sortablejs";
     import SettingsModal from "./SettingsModal.svelte";
+    import ImageList from "./ImageList.svelte";
 
     export let data: TierData;
     export let deleteTier: (tier: TierData) => void;
@@ -14,14 +13,6 @@
     let list: HTMLDivElement;
     let nameSpan: HTMLSpanElement;
     let settingsModal: HTMLDialogElement;
-
-    onMount(() => {
-        Sortable.create(list, {
-            group: "images",
-            animation: 100,
-            dragClass: "ghost",
-        });
-    });
 
     function validateName() {
         if (nameSpan.textContent === "") nameSpan.children[0].remove();
@@ -47,7 +38,7 @@
             {data.name}
         </span>
     </div>
-    <div class="list" bind:this={list}></div>
+    <ImageList bind:data={data.list} />
     <div class="handle">
         {#if shift}
             <button
@@ -120,15 +111,6 @@
         display: inline-block;
         font-style: italic;
         color: rgba(0, 0, 0, 0.7);
-    }
-
-    .list {
-        flex: 1;
-
-        display: flex;
-        flex-wrap: wrap;
-        padding: 10px;
-        gap: 10px;
     }
 
     .handle {
