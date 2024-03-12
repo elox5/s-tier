@@ -15,9 +15,9 @@
     } from "lucide-svelte";
     import Sortable from "sortablejs";
     import TextEntryDialog from "./lib/TextEntryDialog.svelte";
+    import { shift, ctrl } from "./stores";
+    import { get } from "svelte/store";
 
-    let shift: boolean = false;
-    let ctrl: boolean = false;
     let lightTheme: boolean = false;
 
     let tierList: HTMLDivElement;
@@ -180,12 +180,12 @@
     }
 
     function toggleShift() {
-        shift = !shift;
-        ctrl = false;
+        shift.set(!get(shift));
+        ctrl.set(false);
     }
     function toggleCtrl() {
-        ctrl = !ctrl;
-        shift = false;
+        ctrl.set(!get(ctrl));
+        shift.set(false);
     }
     function toggleTheme() {
         lightTheme = !lightTheme;
@@ -224,16 +224,16 @@
     on:paste={handlePaste}
     on:drop={handleDrop}
     on:keydown={(e) => {
-        if (e.key === "Shift") shift = true;
-        if (e.key === "Control") ctrl = true;
+        if (e.key === "Shift") shift.set(true);
+        if (e.key === "Control") ctrl.set(true);
     }}
     on:keyup={(e) => {
-        if (e.key === "Shift") shift = false;
-        if (e.key === "Control") ctrl = false;
+        if (e.key === "Shift") shift.set(false);
+        if (e.key === "Control") ctrl.set(false);
     }}
     on:blur={() => {
-        shift = false;
-        ctrl = false;
+        shift.set(false);
+        ctrl.set(false);
     }}
 />
 
@@ -260,14 +260,14 @@
         </button>
         <button
             class="header-button settings-button"
-            class:active={shift}
+            class:active={get(shift)}
             on:click={toggleShift}
         >
             <Settings2 />
         </button>
         <button
             class="header-button remove-button"
-            class:active={ctrl}
+            class:active={get(ctrl)}
             on:click={toggleCtrl}
         >
             <Trash2 />
@@ -278,7 +278,7 @@
     <div class="tier-container border">
         <div class="tier-list" bind:this={tierList}>
             {#each tiers as tier}
-                <Tier bind:data={tier} bind:shift bind:ctrl {deleteTier} />
+                <Tier bind:data={tier} {deleteTier} />
             {/each}
         </div>
         <button class="add-button" on:click={addTier}><Plus /></button>
@@ -291,16 +291,10 @@
             {showTextEntryDialog}
         >
             {#each imageUrls as url}
-                <Image {url} {ctrl} {shift} />
+                <Image {url} />
             {/each}
             {#each textEntries as entry}
-                <Image
-                    url={entry.text}
-                    color={entry.color}
-                    textOnly={true}
-                    {ctrl}
-                    {shift}
-                />
+                <Image url={entry.text} color={entry.color} textOnly={true} />
             {/each}
         </MainList>
     </div>

@@ -3,24 +3,23 @@
     import type { TierData } from "../main";
     import SettingsModal from "./SettingsModal.svelte";
     import ImageList from "./ImageList.svelte";
+    import { shift, ctrl } from "../stores";
 
     export let data: TierData;
     export let deleteTier: (tier: TierData) => void;
-
-    export let shift: boolean;
-    export let ctrl: boolean;
 
     let list: HTMLDivElement;
     let nameSpan: HTMLSpanElement;
     let settingsModal: HTMLDialogElement;
 
+    let showSettingsButton: boolean = false;
+    let showDeleteButton: boolean = false;
+
+    shift.subscribe((v) => (showSettingsButton = v));
+    ctrl.subscribe((v) => (showDeleteButton = v));
+
     function validateName() {
         if (nameSpan.textContent === "") nameSpan.children[0].remove();
-    }
-
-    function openSettings() {
-        if (!shift) return;
-        settingsModal.showModal();
     }
 </script>
 
@@ -40,14 +39,14 @@
     </div>
     <ImageList bind:data={data.list} />
     <div class="handle sortable-handle">
-        {#if shift}
+        {#if showSettingsButton}
             <button
                 class="handle-button settings-button"
-                on:click={openSettings}
+                on:click={() => settingsModal.showModal()}
             >
                 <Settings2 />
             </button>
-        {:else if ctrl}
+        {:else if showDeleteButton}
             <button
                 class="handle-button remove-button"
                 on:click={() => deleteTier(data)}

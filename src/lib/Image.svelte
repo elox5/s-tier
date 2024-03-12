@@ -1,18 +1,22 @@
 <script lang="ts">
     import { Trash2 } from "lucide-svelte";
+    import { shift, ctrl } from "../stores";
 
     export let url: string;
 
     export let textOnly: boolean = false;
     export let color: string = "#8080ff";
 
-    export let shift: boolean;
-    export let ctrl: boolean;
-
     let container: HTMLDivElement;
 
+    let showEditOverlay: boolean = false;
+    let showDeleteOverlay: boolean = false;
+
+    shift.subscribe((v) => (showEditOverlay = v));
+    ctrl.subscribe((v) => (showDeleteOverlay = v));
+
     function handleRemove() {
-        if (!ctrl) return;
+        if (!showDeleteOverlay) return;
         container.parentElement?.removeChild(container);
     }
 </script>
@@ -26,14 +30,14 @@
                 {url}
             </div>
         {:else}
-            <img class:removable={ctrl} src={url} alt="" />
+            <img class:removable={showDeleteOverlay} src={url} alt="" />
         {/if}
     </div>
 
-    <div class="overlay delete-overlay" class:shown={ctrl}>
+    <div class="overlay delete-overlay" class:shown={showDeleteOverlay}>
         <Trash2 />
     </div>
-    <div class="overlay edit-overlay" class:shown={shift && textOnly}>
+    <div class="overlay edit-overlay" class:shown={showEditOverlay && textOnly}>
         <Trash2 />
     </div>
 </div>
