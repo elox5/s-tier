@@ -434,4 +434,10 @@
             border-bottom-left-radius: 15px;
         }
     }
+
+    @media (max-width: 550px) {
+        main {
+            padding: 10px;
+        }
+    }
 </style>

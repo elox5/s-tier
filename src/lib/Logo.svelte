@@ -30,4 +30,10 @@
         font-size: 1.6rem;
         font-weight: bold;
     }
+
+    @media (max-width: 400px) {
+        .logo {
+            display: none;
+        }
+    }
 </style>
