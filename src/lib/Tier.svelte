@@ -41,6 +41,7 @@
             spellcheck="false"
             placeholder="New Tier"
             bind:this={nameSpan}
+            bind:innerText={data.name}
             on:input={validateName}
         >
             {data.name}

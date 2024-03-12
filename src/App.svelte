@@ -19,26 +19,32 @@
         {
             name: "S",
             color: "#80ff80",
+            index: 0,
         },
         {
             name: "A",
             color: "#c0ff80",
+            index: 1,
         },
         {
             name: "B",
             color: "#ffff80",
+            index: 2,
         },
         {
             name: "C",
             color: "#ffc080",
+            index: 3,
         },
         {
             name: "D",
             color: "#ff9e80",
+            index: 4,
         },
         {
             name: "F",
             color: "#ff8080",
+            index: 5,
         },
     ];
 
@@ -70,6 +76,7 @@
             {
                 name: "",
                 color: tiers.at(-1)?.color ?? "#80ff80",
+                index: tiers.length,
             },
         ];
     }
@@ -159,7 +166,16 @@
         a.click();
     }
 
-    function load(file: File) {}
+    async function load(file: File) {
+        let json = JSON.parse(await file.text());
+
+        if (!json.tiers || !json.imageUrls) {
+            return;
+        }
+
+        tiers = json.tiers;
+        imageUrls = json.imageUrls;
+    }
 </script>
 
 <svelte:window

@@ -4,6 +4,8 @@ import App from './App.svelte'
 export interface TierData {
   name: string;
   color: string;
+  index: number;
+  images?: string[];
 }
 
 const app = new App({
