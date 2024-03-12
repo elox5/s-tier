@@ -1,34 +1,34 @@
 <script lang="ts">
-    import Sortable from "sortablejs";
-    import { onMount } from "svelte";
-
-    let list: HTMLDivElement;
+    import type { ListData } from "../main";
+    import ImageList from "./ImageList.svelte";
 
     export let files: FileList;
-
     export let tierlistFile: File;
+    export let hasUploaded: boolean;
+
+    let empty: boolean = true;
+
+    let data: ListData = {
+        images: [],
+    };
 
     let tierlistUpload: FileList;
     $: if (tierlistUpload && tierlistUpload.length > 0) {
         tierlistFile = tierlistUpload[0];
     }
-
-    onMount(() => {
-        Sortable.create(list, {
-            group: "images",
-            animation: 100,
-            filter: ".fallback",
-        });
-    });
 </script>
 
 <div class="element">
     <div class="main">
-        <div class="image-list" bind:this={list}>
+        <ImageList bind:data bind:empty>
             <slot />
-        </div>
-        <div class="fallback">
-            <h3>Drag or paste images here to get started</h3>
+        </ImageList>
+        <div class="fallback" class:shown={empty}>
+            {#if hasUploaded}
+                <p class="empty-text">empty</p>
+            {:else}
+                <h3>Drag or paste images here to get started</h3>
+            {/if}
         </div>
     </div>
     <div>
@@ -70,6 +70,8 @@
         position: relative;
         overflow-y: scroll;
 
+        display: flex;
+
         --mask: linear-gradient(
             rgba(0, 0, 0, 1) 0%,
             rgba(0, 0, 0, 1) 90%,
@@ -79,29 +81,26 @@
         mask: var(--mask);
     }
 
-    .image-list,
     .fallback {
         position: absolute;
+
+        left: 0px;
+        top: 0px;
 
         width: 100%;
         height: 100%;
 
         padding: 10px;
 
-        display: flex;
-    }
-
-    .image-list {
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-content: start;
-        gap: 10px;
-    }
-
-    .fallback {
+        display: none;
         flex-direction: column;
         align-items: center;
         justify-content: center;
+
+        pointer-events: none;
+    }
+    .fallback.shown {
+        display: flex;
     }
 
     .buttons {
@@ -110,10 +109,6 @@
         align-items: center;
         justify-content: center;
         gap: 10px;
-    }
-
-    .main:has(.image-list:not(:empty)) > .fallback {
-        display: none;
     }
 
     .upload-button {
@@ -129,6 +124,11 @@
     }
     .upload-button:active {
         background-color: var(--upload-button-color-active);
+    }
+
+    .empty-text {
+        color: var(--subtle-text-color);
+        font-weight: bold;
     }
 
     hr {

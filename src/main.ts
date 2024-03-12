@@ -5,6 +5,10 @@ export interface TierData {
   name: string;
   color: string;
   index: number;
+  list: ListData;
+}
+
+export interface ListData {
   images?: string[];
 }
 
