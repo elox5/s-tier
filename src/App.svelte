@@ -257,6 +257,10 @@
 
 <style>
     header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+
         background-color: var(--header-bg-color);
 
         display: flex;
