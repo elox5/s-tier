@@ -189,6 +189,10 @@
         if (e.key === "Shift") shift = false;
         if (e.key === "Control") ctrl = false;
     }}
+    on:blur={() => {
+        shift = false;
+        ctrl = false;
+    }}
 />
 
 <header>
